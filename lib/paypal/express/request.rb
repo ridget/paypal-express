@@ -15,6 +15,7 @@ module Paypal
         end
 
         params[:ALLOWNOTE] = 0 if options[:allow_note] == false
+        params[:ADDROVERRIDE] = 1 if options[:addr_override] == true
 
         {
           :solution_type => :SOLUTIONTYPE,

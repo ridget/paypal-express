@@ -142,6 +142,22 @@ describe Paypal::Express::Request do
       }
     end
 
+    it 'should support addr_override=true option' do
+      expect do
+        instance.setup instant_payment_request, return_url, cancel_url, :addr_override => true
+      end.to request_to nvp_endpoint, :post
+      instance._method_.should == :SetExpressCheckout
+      instance._sent_params_.should == {
+        :PAYMENTREQUEST_0_DESC => 'Instant Payment Request',
+        :RETURNURL => return_url,
+        :CANCELURL => cancel_url,
+        :PAYMENTREQUEST_0_AMT => '1000.00',
+        :PAYMENTREQUEST_0_TAXAMT => "0.00",
+        :PAYMENTREQUEST_0_SHIPPINGAMT => "0.00",
+        :ADDROVERRIDE => 1
+      }
+    end
+
     {
       :solution_type => :SOLUTIONTYPE,
       :landing_page => :LANDINGPAGE,
